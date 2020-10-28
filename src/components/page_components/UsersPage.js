@@ -2,8 +2,9 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 export default function UsersPage() {
   const history = useHistory();
-  const logOut = (e) => {
-    localStorage.clear("token");
+  const logOut = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("id");
     history.push("/");
   };
   return (
