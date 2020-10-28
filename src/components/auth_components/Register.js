@@ -38,53 +38,57 @@ export default function Register() {
     <div className="register">
       <h2>Register here!</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          label="username"
-          type="text"
-          name="username"
-          id="username"
-          placeholder="Enter Username"
-          ref={register({ required: true })}
-        >
-          <p classname="error-message">
+        <label htmlFor="username">
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter Username"
+            ref={register({ required: true })}
+          />
+          <p className="error-message">
             {errors.username && "Unique Username Required"}
           </p>
-        </input>
-        <input
-          label="email"
-          type="email"
-          id="email"
-          placeholder="Enter Email"
-          ref={register({ require: true })}
-        >
-          <p classname="error-message">
+        </label>
+        <label htmlFor="email">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter Email"
+            ref={register({ require: true })}
+          />
+          <p className="error-message">
             {errors.email && "Unique Email Required"}
           </p>
-        </input>
-        <input
-          label="password"
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          ref={register({ required: true })}
-        >
-          <p classname="error-message">
+        </label>
+        <label htmlFor="password">
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            ref={register({ required: true })}
+          />
+          <p className="error-message">
             {errors.password && "Password Required"}
           </p>
-        </input>
-        <input
-          label="confirm"
-          type="password"
-          name="confirm"
-          placeholder="Confirm Password"
-          ref={register({ required: true })}
-        >
-          <p classname="error-message">
+        </label>
+        <label htmlFor="confirm">
+          <input
+            type="password"
+            name="confirm"
+            placeholder="Confirm Password"
+            ref={register({ required: true })}
+          />
+          <p className="error-message">
             {errors.confirm && "Password does not match"}
           </p>
-        </input>
+        </label>
         <button type="submit">Sign up!</button>
       </form>
+      <p className="member">
+        Already a member serving up hot takes? <Link to="/login">Login In</Link>
+      </p>
     </div>
   );
 }
