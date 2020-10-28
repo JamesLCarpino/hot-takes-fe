@@ -25,7 +25,7 @@ export default function Login() {
       .post("auth/login", values)
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.token));
-        history.push("/home");
+        history.push("/my-home");
       })
       .catch((err) => {
         setError(err.response.data.message);
