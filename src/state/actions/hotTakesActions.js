@@ -8,6 +8,10 @@ export const POST_POSTS_SUCCESS = "POST_POSTS_SUCCESS";
 export const POST_POSTS_FAIL = "POST_POSTS_FAIL";
 export const EDIT_POSTS_SUCCESS = "EDIT_POSTS_SUCCESS";
 export const EDIT_POSTS_FAIL = "EDIT_POSTS_FAIL";
+export const FLAG_POST = "FLAG_POST";
+export const GET_TOP_POST_START = "GET_TOP_POST_START";
+export const GET_TOP_POST_SUCCESS = "GET_TOP_POST_SUCCESS";
+export const GET_TOP_POST_FAIL = "GET_TOP_POST_FAIL";
 
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -23,6 +27,19 @@ export const getAllPosts = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: GET_POSTS_FAIL, payload: err.response });
+    });
+};
+
+export const getTopPosts = () => (dispatch) => {
+  dispatch({ type: GET_TOP_POST_START });
+  axiosWithAuth()
+    .get("/posts/top")
+    .then((res) => {
+      dispatch({ type: GET_TOP_POST_SUCCESS, payload: res.data });
+      return res.data;
+    })
+    .catch((err) => {
+      dispatch({ type: GET_TOP_POST_FAIL });
     });
 };
 
@@ -45,6 +62,16 @@ export const editPost = (postUpdate) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EDIT_POSTS_FAIL, payload: err.response });
+    });
+};
+
+export const flagPost = (flagPost) => (dispatch) => {
+  axiosWithAuth()
+    .put(`/posts/${flagPost.id}`, flagPost)
+    .then((res) => {
+      console.log(flagPost);
+      console.log(res);
+      dispatch({ type: FLAG_POST, payload: res.action });
     });
 };
 

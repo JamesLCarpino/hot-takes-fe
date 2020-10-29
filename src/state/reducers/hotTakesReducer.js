@@ -1,4 +1,5 @@
 import {
+  //posts
   GET_POSTS_START,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAIL,
@@ -6,6 +7,12 @@ import {
   POST_POSTS_FAIL,
   EDIT_POSTS_SUCCESS,
   EDIT_POSTS_FAIL,
+  FLAG_POST,
+  GET_TOP_POST_START,
+  GET_TOP_POST_SUCCESS,
+  GET_TOP_POST_FAIL,
+  //
+  //comments
   GET_COMMENTS_START,
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_FAIL,
@@ -59,7 +66,46 @@ export const hotTakesReducer = (state = initialState, action) => {
         ...state,
         error: false,
       };
+    case GET_TOP_POST_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_TOP_POST_SUCCESS:
+      return {
+        ...state,
+        postData: action.payload,
+      };
+    case GET_TOP_POST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
+    case FLAG_POST:
+      return {
+        ...state,
+        postData: state.postData.map((flag) =>
+          flag.id === action.payload.id ? action.payload : flag
+        ),
+      };
+
+    //comments
+    case GET_COMMENTS_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        commentData: action.payload,
+      };
+    case GET_COMMENTS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
