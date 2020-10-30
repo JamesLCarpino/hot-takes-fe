@@ -48,17 +48,6 @@ export default function Login() {
           {errors.username && "Unique Username Required"}
         </p>
 
-        {/* <input
-          label="email"
-          type="email"
-          id="email"
-          placeholder="Enter Email"
-          ref={register({ require: true })}
-        />
-        <p className="error-message">
-          {errors.email && "Unique Email Required"}
-        </p> */}
-
         <input
           label="password"
           type="password"

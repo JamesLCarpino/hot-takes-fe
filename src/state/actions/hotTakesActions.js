@@ -12,6 +12,9 @@ export const FLAG_POST = "FLAG_POST";
 export const GET_TOP_POST_START = "GET_TOP_POST_START";
 export const GET_TOP_POST_SUCCESS = "GET_TOP_POST_SUCCESS";
 export const GET_TOP_POST_FAIL = "GET_TOP_POST_FAIL";
+export const GET_NEWEST_POST_START = "GET_NEWEST_POST_START";
+export const GET_NEWEST_POST_SUCCESS = "GET_NEWEST_POST_SUCCESS";
+export const GET_NEWEST_POST_FAIL = "GET_NEWEST_POST_FAIL";
 
 export const GET_COMMENTS_START = "GET_COMMENTS_START";
 export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -20,7 +23,7 @@ export const GET_COMMENTS_FAIL = "GET_COMMENTS_FAIL";
 export const getAllPosts = () => (dispatch) => {
   dispatch({ type: GET_POSTS_START });
   axiosWithAuth()
-    .get(`/posts`)
+    .get("/posts")
     .then((res) => {
       dispatch({ type: GET_POSTS_SUCCESS, payload: res.data });
       return res.data;
@@ -40,6 +43,18 @@ export const getTopPosts = () => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: GET_TOP_POST_FAIL });
+    });
+};
+
+export const getNewPosts = () => (dispatch) => {
+  dispatch({ type: GET_NEWEST_POST_START });
+  axiosWithAuth()
+    .get("/posts/new")
+    .then((res) => {
+      dispatch({ type: GET_NEWEST_POST_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_NEWEST_POST_FAIL });
     });
 };
 

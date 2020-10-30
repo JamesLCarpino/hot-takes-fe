@@ -11,6 +11,9 @@ import {
   GET_TOP_POST_START,
   GET_TOP_POST_SUCCESS,
   GET_TOP_POST_FAIL,
+  GET_NEWEST_POST_START,
+  GET_NEWEST_POST_SUCCESS,
+  GET_NEWEST_POST_FAIL,
   //
   //comments
   GET_COMMENTS_START,
@@ -20,6 +23,7 @@ import {
 
 const initialState = {
   postData: [],
+
   commentData: [],
   singlePostData: [],
   singleCommentData: [],
@@ -77,6 +81,22 @@ export const hotTakesReducer = (state = initialState, action) => {
         postData: action.payload,
       };
     case GET_TOP_POST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case GET_NEWEST_POST_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_NEWEST_POST_SUCCESS:
+      return {
+        ...state,
+        postData: action.payload,
+      };
+    case GET_NEWEST_POST_FAIL:
       return {
         ...state,
         error: action.payload,
