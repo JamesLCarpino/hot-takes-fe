@@ -16,9 +16,9 @@ export const GET_NEWEST_POST_START = "GET_NEWEST_POST_START";
 export const GET_NEWEST_POST_SUCCESS = "GET_NEWEST_POST_SUCCESS";
 export const GET_NEWEST_POST_FAIL = "GET_NEWEST_POST_FAIL";
 
-export const GET_COMMENTS_START = "GET_COMMENTS_START";
-export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
-export const GET_COMMENTS_FAIL = "GET_COMMENTS_FAIL";
+// export const GET_COMMENTS_START = "GET_COMMENTS_START";
+// export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
+// export const GET_COMMENTS_FAIL = "GET_COMMENTS_FAIL";
 
 export const getAllPosts = () => (dispatch) => {
   dispatch({ type: GET_POSTS_START });
@@ -90,15 +90,15 @@ export const flagPost = (flagPost) => (dispatch) => {
     });
 };
 
-export const getAllComments = () => (dispatch) => {
-  dispatch({ GET_COMMENTS_START });
-  axiosWithAuth()
-    .get("/comments")
-    .then((res) => {
-      dispatch({ type: GET_COMMENTS_SUCCESS, payload: res.data });
-      return res.data;
-    })
-    .catch((err) => {
-      dispatch({ type: GET_COMMENTS_FAIL, payload: err.message });
-    });
-};
+// export const getAllComments = () => (dispatch) => {
+//   dispatch({ GET_COMMENTS_START });
+//   axiosWithAuth()
+//     .get("/comments")
+//     .then((res) => {
+//       dispatch({ type: GET_COMMENTS_SUCCESS, payload: res.data });
+//       return res.data;
+//     })
+//     .catch((err) => {
+//       dispatch({ type: GET_COMMENTS_FAIL, payload: err.message });
+//     });
+// };

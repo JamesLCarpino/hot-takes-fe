@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { hotTakesReducer } from "./reducers/hotTakesReducer";
+import { hotTakesReducer_POSTS } from "./reducers/hotTakesReducer_POSTS";
 
 export default combineReducers({
-  hotTakesReducer,
+  hotTakesReducer_POSTS,
 });

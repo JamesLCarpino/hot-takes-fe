@@ -1,1 +1,1 @@
-export * from "./hotTakesReducer";
+export * from "./hotTakesReducer_POSTS";

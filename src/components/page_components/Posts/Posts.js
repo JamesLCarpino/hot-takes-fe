@@ -4,54 +4,65 @@ import { useSelector, useDispatch } from "react-redux";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-
+import DropdownButton from "react-bootstrap/DropdownButton";
+import Dropdown from "react-bootstrap/Dropdown";
 import {
   getAllPosts,
   addPost,
   editPost,
   getTopPosts,
+  getNewPosts,
 } from "../../../state/actions";
 
 export default function Posts() {
   const [togglePosts, setTogglePosts] = useState({
     allPosts: false,
     newPosts: false,
-    topPosts: true,
+    topPosts: false,
     myPosts: false,
     myComments: false,
   });
+  const [postDisplay, setPostDisplay] = useState("");
 
   const { postData, loading, error } = useSelector(
-    (state) => state.hotTakesReducer
+    (state) => state.hotTakesReducer_POSTS
   );
   const dispatch = useDispatch();
 
   const showAllPosts = () => {
     dispatch(getAllPosts());
+    setPostDisplay("All");
     setTogglePosts({
-      ...togglePosts,
-      topPosts: false,
       allPosts: true,
     });
   };
   const showTopPosts = () => {
     dispatch(getTopPosts());
+    setPostDisplay("Top");
     setTogglePosts({
-      ...togglePosts,
       topPosts: true,
     });
+    console.log("top clicked", togglePosts);
+  };
+
+  const showNewestPosts = () => {
+    dispatch(getNewPosts);
+    setPostDisplay("New");
+    setTogglePosts({
+      newPosts: true,
+    });
+    console.log("newest clicked", togglePosts);
   };
 
   const showMyPosts = () => {
+    setPostDisplay("My");
     setTogglePosts({
-      ...togglePosts,
       myPosts: true,
     });
   };
 
   const showMyComments = () => {
     setTogglePosts({
-      ...togglePosts,
       myComments: true,
     });
   };
@@ -63,12 +74,27 @@ export default function Posts() {
   return (
     <div>
       <div>
-        <Button onClick={showAllPosts}>All Posts</Button>
-        <Button onClick={showTopPosts}>Top Posts</Button>
-        <Button onClick={showMyPosts}>My Posts</Button>
-        <Button onClick={showMyComments}>My Comments</Button>
+        <DropdownButton
+          id="dropdown-item-button"
+          size="sm"
+          title={`Displaying ${postDisplay} Posts`}
+          variant="secondary"
+        >
+          <Dropdown.Item as="button" onClick={showAllPosts}>
+            All Posts
+          </Dropdown.Item>
+          <Dropdown.Item as="button" onClick={showTopPosts}>
+            Top Posts
+          </Dropdown.Item>
+          <Dropdown.Item as="button" onClick={showNewestPosts}>
+            New Posts
+          </Dropdown.Item>
+          <Dropdown.Item as="button" onClick={showMyPosts}>
+            My Posts
+          </Dropdown.Item>
+        </DropdownButton>
       </div>
-      {loading ? (
+      {loading === true ? (
         <div>
           {postData.map((posts) => {
             return (
@@ -76,6 +102,7 @@ export default function Posts() {
                 <Card.Title>{posts.title}</Card.Title>
                 <p>{posts.content}</p>
                 <p>{posts.votes}</p>
+                {togglePosts.newPosts === true ? <p>{posts.created}</p> : null}
               </Card>
             );
           })}

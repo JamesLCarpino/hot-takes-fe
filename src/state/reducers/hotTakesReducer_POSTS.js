@@ -16,9 +16,9 @@ import {
   GET_NEWEST_POST_FAIL,
   //
   //comments
-  GET_COMMENTS_START,
-  GET_COMMENTS_SUCCESS,
-  GET_COMMENTS_FAIL,
+  // GET_COMMENTS_START,
+  // GET_COMMENTS_SUCCESS,
+  // GET_COMMENTS_FAIL,
 } from "../actions";
 
 const initialState = {
@@ -30,7 +30,7 @@ const initialState = {
   loading: false,
   error: "",
 };
-export const hotTakesReducer = (state = initialState, action) => {
+export const hotTakesReducer_POSTS = (state = initialState, action) => {
   switch (action.type) {
     case GET_POSTS_START:
       return {
@@ -111,21 +111,21 @@ export const hotTakesReducer = (state = initialState, action) => {
       };
 
     //comments
-    case GET_COMMENTS_START:
-      return {
-        ...state,
-        loading: true,
-      };
-    case GET_COMMENTS_SUCCESS:
-      return {
-        ...state,
-        commentData: action.payload,
-      };
-    case GET_COMMENTS_FAIL:
-      return {
-        ...state,
-        error: action.payload,
-      };
+    // case GET_COMMENTS_START:
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //   };
+    // case GET_COMMENTS_SUCCESS:
+    //   return {
+    //     ...state,
+    //     commentData: action.payload,
+    //   };
+    // case GET_COMMENTS_FAIL:
+    //   return {
+    //     ...state,
+    //     error: action.payload,
+    //   };
     default:
       return state;
   }
