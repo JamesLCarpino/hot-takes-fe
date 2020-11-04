@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import NewPostForm from "../Posts/NewPostForm";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -12,6 +13,7 @@ import {
   editPost,
   getTopPosts,
   getNewPosts,
+  getPostsByUser,
 } from "../../../state/actions";
 
 export default function Posts() {
@@ -46,7 +48,7 @@ export default function Posts() {
   };
 
   const showNewestPosts = () => {
-    dispatch(getNewPosts);
+    dispatch(getNewPosts());
     setPostDisplay("New");
     setTogglePosts({
       newPosts: true,
@@ -54,7 +56,10 @@ export default function Posts() {
     console.log("newest clicked", togglePosts);
   };
 
+  let userID = JSON.parse(localStorage.getItem("id"));
   const showMyPosts = () => {
+    console.log("userID", userID);
+    dispatch(getPostsByUser(userID));
     setPostDisplay("My");
     setTogglePosts({
       myPosts: true,
@@ -94,22 +99,29 @@ export default function Posts() {
           </Dropdown.Item>
         </DropdownButton>
       </div>
-      {loading === true ? (
-        <div>
-          {postData.map((posts) => {
-            return (
-              <Card>
-                <Card.Title>{posts.title}</Card.Title>
-                <p>{posts.content}</p>
-                <p>{posts.votes}</p>
-                {togglePosts.newPosts === true ? <p>{posts.created}</p> : null}
-              </Card>
-            );
-          })}
-        </div>
-      ) : (
-        <Spinner animation="border"></Spinner>
-      )}
+      {/* <div>
+        <NewPostForm />
+      </div> */}
+      <div>
+        {loading === true ? (
+          <div>
+            {postData.map((posts) => {
+              return (
+                <Card>
+                  <Card.Title>{posts.title}</Card.Title>
+                  <p>{posts.content}</p>
+                  <p>{posts.votes}</p>
+                  {togglePosts.newPosts === true ? (
+                    <p>{posts.created}</p>
+                  ) : null}
+                </Card>
+              );
+            })}
+          </div>
+        ) : (
+          <Spinner animation="border"></Spinner>
+        )}
+      </div>
     </div>
   );
 }

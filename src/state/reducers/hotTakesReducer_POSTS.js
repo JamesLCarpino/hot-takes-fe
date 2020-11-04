@@ -14,6 +14,9 @@ import {
   GET_NEWEST_POST_START,
   GET_NEWEST_POST_SUCCESS,
   GET_NEWEST_POST_FAIL,
+  GET_USER_POSTS_START,
+  GET_USER_POSTS_SUCCESS,
+  GET_USER_POSTS_FAIL,
   //
   //comments
   // GET_COMMENTS_START,
@@ -101,7 +104,23 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
         ...state,
         error: action.payload,
       };
-
+    case GET_USER_POSTS_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_USER_POSTS_SUCCESS:
+      return {
+        ...state,
+        postData: state.postData.map((id) =>
+          id.id === action.payload.id ? action.payload : id
+        ),
+      };
+    case GET_USER_POSTS_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case FLAG_POST:
       return {
         ...state,

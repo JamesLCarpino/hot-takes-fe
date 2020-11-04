@@ -15,6 +15,9 @@ export const GET_TOP_POST_FAIL = "GET_TOP_POST_FAIL";
 export const GET_NEWEST_POST_START = "GET_NEWEST_POST_START";
 export const GET_NEWEST_POST_SUCCESS = "GET_NEWEST_POST_SUCCESS";
 export const GET_NEWEST_POST_FAIL = "GET_NEWEST_POST_FAIL";
+export const GET_USER_POSTS_START = "GET_USER_POSTS_START";
+export const GET_USER_POSTS_SUCCESS = "GET_USER_POSTS_SUCCESS";
+export const GET_USER_POSTS_FAIL = "GET_USER_POSTS_FAIL";
 
 // export const GET_COMMENTS_START = "GET_COMMENTS_START";
 // export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
@@ -87,6 +90,19 @@ export const flagPost = (flagPost) => (dispatch) => {
       console.log(flagPost);
       console.log(res);
       dispatch({ type: FLAG_POST, payload: res.action });
+    });
+};
+
+export const getPostsByUser = (id) => (dispatch) => {
+  dispatch({ type: GET_USER_POSTS_START });
+  axiosWithAuth()
+    .get(`users/${id}/posts`)
+    .then((res) => {
+      console.log("id", id);
+      dispatch({ type: GET_USER_POSTS_SUCCESS, payload: res.action });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_USER_POSTS_FAIL, payload: err.message });
     });
 };
 
