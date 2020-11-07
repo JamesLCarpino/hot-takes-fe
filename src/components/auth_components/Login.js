@@ -21,12 +21,13 @@ export default function Login() {
 
   const onSubmit = (values) => {
     setLoading(true);
+
     axiosWithAuth()
       .post("auth/login", values)
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("id", JSON.stringify(res.data.id));
-        history.push("/my-home");
+        history.go("/my-home");
       })
       .catch((err) => {
         setError(err.response.data.message);

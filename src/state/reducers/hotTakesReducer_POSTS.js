@@ -112,7 +112,7 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
     case GET_USER_POSTS_SUCCESS:
       return {
         ...state,
-        postData: [action.payload],
+        postData: action.payload,
       };
     case GET_USER_POSTS_FAIL:
       return {

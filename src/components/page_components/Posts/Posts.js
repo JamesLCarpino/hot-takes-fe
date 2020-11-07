@@ -99,9 +99,9 @@ export default function Posts() {
           </Dropdown.Item>
         </DropdownButton>
       </div>
-      {/* <div>
-        <NewPostForm />
-      </div> */}
+      <div>
+        <NewPostForm postData={postData} />
+      </div>
       <div>
         {loading === true ? (
           <div>
