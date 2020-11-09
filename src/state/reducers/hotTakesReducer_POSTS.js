@@ -3,6 +3,7 @@ import {
   GET_POSTS_START,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAIL,
+  POST_POSTS_START,
   POST_POSTS_SUCCESS,
   POST_POSTS_FAIL,
   EDIT_POSTS_SUCCESS,
@@ -49,6 +50,11 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
       return {
         ...state,
         error: action.payload,
+      };
+    case POST_POSTS_START:
+      return {
+        ...state,
+        loading: true,
       };
 
     case POST_POSTS_SUCCESS:

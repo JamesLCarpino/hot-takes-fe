@@ -4,6 +4,7 @@ import { axiosWithAuth } from "../../utils/axiosWithAuth";
 export const GET_POSTS_START = "GET_POSTS_START";
 export const GET_POSTS_SUCCESS = " GET_POSTS_SUCCESS";
 export const GET_POSTS_FAIL = "GET_POSTS_FAIL";
+export const POST_POSTS_START = "POST_POSTS_START";
 export const POST_POSTS_SUCCESS = "POST_POSTS_SUCCESS";
 export const POST_POSTS_FAIL = "POST_POSTS_FAIL";
 export const EDIT_POSTS_SUCCESS = "EDIT_POSTS_SUCCESS";
@@ -62,6 +63,7 @@ export const getNewPosts = () => (dispatch) => {
 };
 
 export const addPost = (newPost) => (dispatch) => {
+  dispatch({ type: POST_POSTS_START });
   axiosWithAuth()
     .post(`/posts`, newPost)
     .then((res) => {

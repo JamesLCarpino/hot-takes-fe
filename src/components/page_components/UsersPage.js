@@ -19,6 +19,7 @@ export default function UsersPage() {
     history.push("/");
   };
 
+  useEffect(() => {});
   return (
     <div className="user-page-wrapper">
       <h1>User Page</h1>

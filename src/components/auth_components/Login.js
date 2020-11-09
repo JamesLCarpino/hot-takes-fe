@@ -9,7 +9,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const { register, handleSubmit, watch, errors } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   useEffect(() => {
     if (error) {
@@ -27,7 +27,7 @@ export default function Login() {
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("id", JSON.stringify(res.data.id));
-        history.go("/my-home");
+        history.push("/my-home");
       })
       .catch((err) => {
         setError(err.response.data.message);
