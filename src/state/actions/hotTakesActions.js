@@ -101,8 +101,6 @@ export const getPostsByUser = (user_id) => (dispatch) => {
   axiosWithAuth()
     .get(`users/${user_id}/posts`)
     .then((res) => {
-      console.log("id", user_id);
-      console.log(res.action);
       dispatch({ type: GET_USER_POSTS_SUCCESS, payload: res.data });
     })
     .catch((err) => {
