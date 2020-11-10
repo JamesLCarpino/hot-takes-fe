@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NewPostForm from "../Posts/NewPostForm";
+import { useHistory } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -14,9 +15,11 @@ import {
   getTopPosts,
   getNewPosts,
   getPostsByUser,
+  deletePost,
 } from "../../../state/actions";
 
 export default function Posts() {
+  let history = useHistory();
   const [togglePosts, setTogglePosts] = useState({
     allPosts: false,
     newPosts: false,
@@ -72,6 +75,11 @@ export default function Posts() {
     });
   };
 
+  const onDelete = (post_id) => {
+    console.log("FROM onDELETE", post_id);
+    dispatch(deletePost(post_id));
+  };
+
   useEffect(() => {
     dispatch(getTopPosts());
   }, [dispatch]);
@@ -113,6 +121,16 @@ export default function Posts() {
                   <p>{posts.votes}</p>
                   {togglePosts.newPosts === true ? (
                     <p>{posts.created}</p>
+                  ) : null}
+                  {togglePosts.myPosts === true ? (
+                    <button
+                      onClick={() => {
+                        onDelete(posts.id);
+                      }}
+                    >
+                      {" "}
+                      Delete Me!
+                    </button>
                   ) : null}
                 </Card>
               );

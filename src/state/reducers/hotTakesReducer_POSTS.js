@@ -18,6 +18,8 @@ import {
   GET_USER_POSTS_START,
   GET_USER_POSTS_SUCCESS,
   GET_USER_POSTS_FAIL,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_FAIL,
   //
   //comments
   // GET_COMMENTS_START,
@@ -131,6 +133,17 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
         postData: state.postData.map((flag) =>
           flag.id === action.payload.id ? action.payload : flag
         ),
+      };
+    case DELETE_POST_SUCCESS:
+      const postID = action.payload;
+      return {
+        ...state,
+        postData: state.postData.filter((post) => post !== postID),
+      };
+    case DELETE_POST_FAIL:
+      return {
+        ...state,
+        error: action.payload,
       };
 
     //comments

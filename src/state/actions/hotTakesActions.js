@@ -9,6 +9,8 @@ export const POST_POSTS_SUCCESS = "POST_POSTS_SUCCESS";
 export const POST_POSTS_FAIL = "POST_POSTS_FAIL";
 export const EDIT_POSTS_SUCCESS = "EDIT_POSTS_SUCCESS";
 export const EDIT_POSTS_FAIL = "EDIT_POSTS_FAIL";
+export const DELETE_POST_SUCCESS = "DELETE_POST_SUCCESS";
+export const DELETE_POST_FAIL = "DELETE_POST_FAIL";
 export const FLAG_POST = "FLAG_POST";
 export const GET_TOP_POST_START = "GET_TOP_POST_START";
 export const GET_TOP_POST_SUCCESS = "GET_TOP_POST_SUCCESS";
@@ -64,7 +66,6 @@ export const getNewPosts = () => (dispatch) => {
 
 export const addPost = (newPost) => (dispatch) => {
   dispatch({ type: POST_POSTS_START });
-
   axiosWithAuth()
     .post(`/posts`, newPost)
     .then((res) => {
@@ -83,6 +84,18 @@ export const editPost = (postUpdate) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: EDIT_POSTS_FAIL, payload: err.response });
+    });
+};
+
+export const deletePost = (id) => (dispatch) => {
+  axiosWithAuth()
+    .delete(`posts/${id}`)
+    .then((res) => {
+      console.log("delete", res.data);
+      dispatch({ type: DELETE_POST_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: DELETE_POST_FAIL, payload: err.response });
     });
 };
 
