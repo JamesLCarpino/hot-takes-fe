@@ -64,6 +64,7 @@ export const getNewPosts = () => (dispatch) => {
 
 export const addPost = (newPost) => (dispatch) => {
   dispatch({ type: POST_POSTS_START });
+
   axiosWithAuth()
     .post(`/posts`, newPost)
     .then((res) => {
@@ -95,13 +96,14 @@ export const flagPost = (flagPost) => (dispatch) => {
     });
 };
 
-export const getPostsByUser = (id) => (dispatch) => {
+export const getPostsByUser = (user_id) => (dispatch) => {
   dispatch({ type: GET_USER_POSTS_START });
   axiosWithAuth()
-    .get(`users/${id}/posts`)
+    .get(`users/${user_id}/posts`)
     .then((res) => {
-      console.log("id", id);
-      dispatch({ type: GET_USER_POSTS_SUCCESS, payload: res.action });
+      console.log("id", user_id);
+      console.log(res.action);
+      dispatch({ type: GET_USER_POSTS_SUCCESS, payload: res.data });
     })
     .catch((err) => {
       dispatch({ type: GET_USER_POSTS_FAIL, payload: err.message });

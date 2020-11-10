@@ -56,10 +56,10 @@ export default function Posts() {
     console.log("newest clicked", togglePosts);
   };
 
-  let userID = JSON.parse(localStorage.getItem("id"));
+  let user_id = JSON.parse(localStorage.getItem("id"));
   const showMyPosts = () => {
-    console.log("userID", userID);
-    dispatch(getPostsByUser(userID));
+    console.log("userID", user_id);
+    dispatch(getPostsByUser(user_id));
     setPostDisplay("My");
     setTogglePosts({
       myPosts: true,
