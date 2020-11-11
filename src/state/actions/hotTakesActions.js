@@ -1,6 +1,11 @@
 import axios from "axios";
 import { axiosWithAuth } from "../../utils/axiosWithAuth";
+//USER STUFF
+// export const GET_USERS_START = "GET_USERS_START";
+// export const GET_USERS_SUCCESS = "GET_USERS_SUCCESS";
+// export const GET_USER_FAIL = "GET_USER_FAIL";
 
+//POST STUFF
 export const GET_POSTS_START = "GET_POSTS_START";
 export const GET_POSTS_SUCCESS = " GET_POSTS_SUCCESS";
 export const GET_POSTS_FAIL = "GET_POSTS_FAIL";
@@ -26,6 +31,19 @@ export const GET_USER_POSTS_FAIL = "GET_USER_POSTS_FAIL";
 // export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 // export const GET_COMMENTS_FAIL = "GET_COMMENTS_FAIL";
 
+//USERS ACTIONS
+// export const getUsername = (id) => (dispatch) => {
+//   dispatch({ type: GET_USERS_START });
+//   axiosWithAuth()
+//     .get(`/users/${id}`)
+//     .then((res) => {
+//       dispatch({ type: GET_USERS_SUCCESS, payload: res.data });
+//     })
+//     .catch((err) => {
+//       dispatch({ type: GET_USER_FAIL, payload: err.message });
+//     });
+// };
+//POSTS ACTIONS
 export const getAllPosts = () => (dispatch) => {
   dispatch({ type: GET_POSTS_START });
   axiosWithAuth()
