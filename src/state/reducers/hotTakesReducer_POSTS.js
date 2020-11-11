@@ -72,9 +72,7 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
     case EDIT_POSTS_SUCCESS:
       return {
         ...state,
-        postData: state.postData.map((post) =>
-          post.id === action.payload.id ? action.payload : post
-        ),
+        postData: action.payload,
       };
     case EDIT_POSTS_FAIL:
       return {

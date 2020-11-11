@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
+import Alert from "react-bootstrap/Alert";
 import {
   getAllPosts,
   editPost,
@@ -68,15 +69,23 @@ function Posts(props) {
     });
   };
 
-  const showMyComments = () => {
-    setTogglePosts({
-      myComments: true,
-    });
+  const [show, setShow] = useState(false);
+  const deleteItOrNot = () => {
+    setShow(true);
   };
-
+  const cancelDelete = () => {
+    setShow(false);
+  };
   const onDelete = (post_id) => {
     console.log("FROM onDELETE", post_id);
+
     dispatch(deletePost(post_id));
+  };
+
+  const upvotePost = (post_id) => {
+    console.log("FROM FLAGPOST", post_id);
+
+    // dispatch(editPost(post_id));
   };
 
   useEffect(() => {
@@ -107,9 +116,7 @@ function Posts(props) {
         </DropdownButton>
       </div>
       <div>
-        <NewPostForm
-        // postData={postData}
-        />
+        <NewPostForm />
       </div>
       <div>
         {props.loading === true ? (
@@ -123,16 +130,40 @@ function Posts(props) {
                   {togglePosts.newPosts === true ? (
                     <p>{posts.created}</p>
                   ) : null}
+
                   {togglePosts.myPosts === true ? (
-                    <button
-                      onClick={() => {
-                        onDelete(posts.id);
-                      }}
-                    >
-                      {" "}
-                      Delete Me!
-                    </button>
+                    <>
+                      {!show ? (
+                        <Button onClick={deleteItOrNot}>Delete</Button>
+                      ) : (
+                        <Alert show={show} variant="alert">
+                          <Alert.Heading>
+                            Are you sure you want to delete?
+                          </Alert.Heading>
+                          <Button onClick={cancelDelete}>
+                            Nevermind, keep my hot take
+                          </Button>
+                          <Button
+                            onClick={() => {
+                              onDelete(posts.id);
+                            }}
+                          >
+                            {" "}
+                            Delete this cold take you loser.{" "}
+                          </Button>
+                        </Alert>
+                      )}
+                    </>
                   ) : null}
+
+                  <button
+                    onClick={() => {
+                      upvotePost(posts.id);
+                    }}
+                  >
+                    upvote
+                  </button>
+                  <button>downvote</button>
                 </Card>
               );
             })}
