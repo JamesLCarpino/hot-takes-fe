@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 import NewPostForm from "../Posts/NewPostForm";
 import { useHistory } from "react-router-dom";
 
@@ -10,7 +10,6 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import {
   getAllPosts,
-  addPost,
   editPost,
   getTopPosts,
   getNewPosts,
@@ -18,7 +17,7 @@ import {
   deletePost,
 } from "../../../state/actions";
 
-export default function Posts() {
+function Posts(props) {
   let history = useHistory();
   const [togglePosts, setTogglePosts] = useState({
     allPosts: false,
@@ -29,9 +28,9 @@ export default function Posts() {
   });
   const [postDisplay, setPostDisplay] = useState("");
 
-  const { postData, loading, error } = useSelector(
-    (state) => state.hotTakesReducer_POSTS
-  );
+  // const { postData, loading, error } = useSelector(
+  //   (state) => state.hotTakesReducer_POSTS
+  // );
   const dispatch = useDispatch();
 
   const showAllPosts = () => {
@@ -108,12 +107,14 @@ export default function Posts() {
         </DropdownButton>
       </div>
       <div>
-        <NewPostForm postData={postData} />
+        <NewPostForm
+        // postData={postData}
+        />
       </div>
       <div>
-        {loading === true ? (
+        {props.loading === true ? (
           <div>
-            {postData.map((posts) => {
+            {props.post.map((posts) => {
               return (
                 <Card>
                   <Card.Title>{posts.title}</Card.Title>
@@ -143,3 +144,18 @@ export default function Posts() {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    post: state.hotTakesReducer_POSTS.postData,
+    loading: state.hotTakesReducer_POSTS.loading,
+  };
+};
+
+export default connect(mapStateToProps, {
+  getAllPosts,
+  editPost,
+  getTopPosts,
+  getNewPosts,
+  getPostsByUser,
+  deletePost,
+})(Posts);

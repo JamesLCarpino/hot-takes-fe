@@ -135,10 +135,15 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
         ),
       };
     case DELETE_POST_SUCCESS:
-      const postID = action.payload;
+      // const postID = action.payload;
+      // console.log("POSTID", postID);
       return {
         ...state,
-        postData: state.postData.filter((post) => post !== postID),
+        postData: state.postData.filter(
+          (post) =>
+            //console.log(post.id, action.payload.id)
+            post.id !== action.payload.id
+        ),
       };
     case DELETE_POST_FAIL:
       return {
