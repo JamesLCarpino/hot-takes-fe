@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch, connect } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import NewPostForm from "../Posts/NewPostForm";
 import { useHistory } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import Spinner from "react-bootstrap/Spinner";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import Alert from "react-bootstrap/Alert";
+import Modal from "react-bootstrap/Modal";
 import {
   getAllPosts,
   editPost,
@@ -20,6 +21,7 @@ import {
 
 function Posts(props) {
   let history = useHistory();
+  const [visible, setVisible] = useState(false);
   const [togglePosts, setTogglePosts] = useState({
     allPosts: false,
     newPosts: false,
@@ -29,9 +31,6 @@ function Posts(props) {
   });
   const [postDisplay, setPostDisplay] = useState("");
 
-  // const { postData, loading, error } = useSelector(
-  //   (state) => state.hotTakesReducer_POSTS
-  // );
   const dispatch = useDispatch();
 
   const showAllPosts = () => {
@@ -82,14 +81,28 @@ function Posts(props) {
     dispatch(deletePost(post_id));
   };
 
+  const showNewPostModal = () => {
+    setVisible(true);
+  };
+  const hidePostModal = () => {
+    setVisible(false);
+  };
+
+  const [vote, setVote] = useState({
+    up_votes: 0,
+    down_votes: 0,
+  });
   const upvotePost = (post_id) => {
-    console.log("FROM FLAGPOST", post_id);
+    console.log("FROM UPVOTE", post_id);
 
     // dispatch(editPost(post_id));
   };
 
   useEffect(() => {
-    dispatch(getTopPosts());
+    dispatch(getPostsByUser());
+    setTogglePosts({
+      myPosts: true,
+    });
   }, [dispatch]);
 
   return (
@@ -115,15 +128,42 @@ function Posts(props) {
           </Dropdown.Item>
         </DropdownButton>
       </div>
-      <div>
+      <Button onClick={showNewPostModal}>Got A Hot Take? Click me.</Button>
+      <Modal
+        title="Basic Modal"
+        onHide={hidePostModal}
+        show={visible}
+        aria-labelledby="contained-modal"
+        centered
+      >
         <NewPostForm />
-      </div>
+      </Modal>
       <div>
+        {togglePosts.myPosts === true ? (
+          <>
+            {!show ? (
+              <Button onClick={deleteItOrNot}>Delete Your Takes?</Button>
+            ) : (
+              <Button onClick={cancelDelete}>
+                Nevermind, keep my hot takes!
+              </Button>
+            )}
+          </>
+        ) : null}
         {props.loading === true ? (
           <div>
             {props.post.map((posts) => {
               return (
-                <Card>
+                <Card
+                  style={{
+                    textAlign: "center",
+
+                    marginLeft: "17%",
+                    marginRight: "17%",
+                    marginTop: "2%",
+                    padding: "2%",
+                  }}
+                >
                   <Card.Title>{posts.title}</Card.Title>
                   <p>{posts.content}</p>
                   <p>{posts.votes}</p>
@@ -133,19 +173,16 @@ function Posts(props) {
 
                   {togglePosts.myPosts === true ? (
                     <>
-                      {!show ? (
-                        <Button onClick={deleteItOrNot}>Delete</Button>
-                      ) : (
-                        <Alert show={show} variant="alert">
+                      {!show ? null : (
+                        <Alert show={show} variant="danger">
                           <Alert.Heading>
                             Are you sure you want to delete?
                           </Alert.Heading>
-                          <Button onClick={cancelDelete}>
-                            Nevermind, keep my hot take
-                          </Button>
+
                           <Button
                             onClick={() => {
                               onDelete(posts.id);
+                              setShow(false);
                             }}
                           >
                             {" "}

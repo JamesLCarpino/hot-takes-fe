@@ -30,7 +30,7 @@ export default function UsersPage() {
   }, [dispatch, user_id]);
   return (
     <div className="user-page-wrapper">
-      <h1>{`Welcome ${username}`}</h1>
+      <h1>{`What Hot Takes Do You Have Today ${username}?`}</h1>
       <button onClick={logOut}>sign out</button>
 
       <div>
