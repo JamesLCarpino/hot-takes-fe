@@ -21,16 +21,18 @@ export default function Login() {
 
   const onSubmit = (values) => {
     setLoading(true);
-
+    console.log(values);
     axiosWithAuth()
       .post("auth/login", values)
       .then((res) => {
+        // if()
         localStorage.setItem("token", JSON.stringify(res.data.token));
         localStorage.setItem("id", JSON.stringify(res.data.id));
         history.push("/hot-takes");
       })
       .catch((err) => {
         setError(err.response.data.message);
+        alert("Please check your credentials.");
       });
   };
   return (
