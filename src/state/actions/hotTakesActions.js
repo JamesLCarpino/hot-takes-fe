@@ -139,6 +139,18 @@ export const getPostsByUser = (user_id) => (dispatch) => {
     });
 };
 
+export const upvotePost = (postUpdate) => (dispatch) => {
+  axiosWithAuth()
+    .put(`/posts/${postUpdate.id}`, postUpdate)
+    .then((res) => {
+      console.log(res);
+      dispatch({ type: POST_POSTS_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: EDIT_POSTS_FAIL, payload: err.response });
+    });
+};
+
 // export const getAllComments = () => (dispatch) => {
 //   dispatch({ GET_COMMENTS_START });
 //   axiosWithAuth()

@@ -17,6 +17,7 @@ import {
   getNewPosts,
   getPostsByUser,
   deletePost,
+  upvotePost,
 } from "../../../state/actions";
 
 function Posts(props) {
@@ -93,9 +94,10 @@ function Posts(props) {
     down_votes: 0,
   });
   const upvotePost = (post_id) => {
-    console.log("FROM UPVOTE", post_id);
+    //console.log("FROM UPVOTE", post_id);
 
-    // dispatch(editPost(post_id));
+    dispatch(upvotePost(post_id));
+    // console.log("edit post function", editPost(post_id));
   };
 
   useEffect(() => {

@@ -148,6 +148,16 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
         ...state,
         error: action.payload,
       };
+    // case UPVOTE_START:
+    //   return{
+    //     ...state,
+    //     loading:true,
+    //   };
+    // case UPVOTE_SUCCESS:
+    //   return{
+    //     ...state,
+    //     upvote:
+    //   }
 
     //comments
     // case GET_COMMENTS_START:
