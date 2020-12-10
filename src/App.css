@@ -40,3 +40,10 @@
 .user-page-wrapper {
   margin: 5%;
 }
+
+.clickable{
+  background: blue;
+}
+.clickable:disabled {
+  background: grey;
+}

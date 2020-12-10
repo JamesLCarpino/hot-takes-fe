@@ -26,7 +26,10 @@ export const GET_NEWEST_POST_FAIL = "GET_NEWEST_POST_FAIL";
 export const GET_USER_POSTS_START = "GET_USER_POSTS_START";
 export const GET_USER_POSTS_SUCCESS = "GET_USER_POSTS_SUCCESS";
 export const GET_USER_POSTS_FAIL = "GET_USER_POSTS_FAIL";
-
+export const UPVOTE_SUCCESS = "UPVOTE_SUCCESS";
+export const UPVOTE_FAIL = "UPVOTE_FAIL";
+export const DOWNVOTE_FAIL = "DOWNVOTE_FAIL";
+export const DOWNVOTE_SUCCESS = "DOWNVOTE_SUCCESS";
 // export const GET_COMMENTS_START = "GET_COMMENTS_START";
 // export const GET_COMMENTS_SUCCESS = "GET_COMMENTS_SUCCESS";
 // export const GET_COMMENTS_FAIL = "GET_COMMENTS_FAIL";
@@ -139,15 +142,27 @@ export const getPostsByUser = (user_id) => (dispatch) => {
     });
 };
 
-export const upvotePost = (postUpdate) => (dispatch) => {
+export const upvotePost = (post_id) => (dispatch) => {
   axiosWithAuth()
-    .put(`/posts/${postUpdate.id}`, postUpdate)
+    .put(`/posts/${post_id}/upvote`)
     .then((res) => {
-      console.log(res);
-      dispatch({ type: POST_POSTS_SUCCESS, payload: res.data });
+      //console.log("RES FORM UPVOTE", res);
+      dispatch({ type: UPVOTE_SUCCESS, payload: res.data });
     })
     .catch((err) => {
-      dispatch({ type: EDIT_POSTS_FAIL, payload: err.response });
+      dispatch({ type: UPVOTE_FAIL, payload: err.response });
+    });
+};
+
+export const downvotePost = (post_id) => (dispatch) => {
+  axiosWithAuth()
+    .put(`/posts/${post_id}/downvote`)
+    .then((res) => {
+      //console.log("RES FORM UPVOTE", res);
+      dispatch({ type: DOWNVOTE_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: DOWNVOTE_FAIL, payload: err.response });
     });
 };
 

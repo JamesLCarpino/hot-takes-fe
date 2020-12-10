@@ -20,6 +20,10 @@ import {
   GET_USER_POSTS_FAIL,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAIL,
+  UPVOTE_SUCCESS,
+  UPVOTE_FAIL,
+  DOWNVOTE_SUCCESS,
+  DOWNVOTE_FAIL,
   //
   //comments
   // GET_COMMENTS_START,
@@ -33,6 +37,7 @@ const initialState = {
   commentData: [],
   singlePostData: [],
   singleCommentData: [],
+  votes: [],
   loading: false,
   error: "",
 };
@@ -153,11 +158,20 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
     //     ...state,
     //     loading:true,
     //   };
-    // case UPVOTE_SUCCESS:
-    //   return{
-    //     ...state,
-    //     upvote:
-    //   }
+    case UPVOTE_SUCCESS:
+      return {
+        ...state,
+        votes: action.payload,
+      };
+    case UPVOTE_FAIL:
+      return { ...state, error: action.payload };
+    case DOWNVOTE_SUCCESS:
+      return {
+        ...state,
+        votes: action.payload,
+      };
+    case DOWNVOTE_FAIL:
+      return { ...state, error: action.payload };
 
     //comments
     // case GET_COMMENTS_START:

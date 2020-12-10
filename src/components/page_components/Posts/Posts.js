@@ -18,11 +18,16 @@ import {
   getPostsByUser,
   deletePost,
   upvotePost,
+  downvotePost,
 } from "../../../state/actions";
+
+let global_votes = [];
 
 function Posts(props) {
   let history = useHistory();
+
   const [visible, setVisible] = useState(false);
+  const [disabledVote, setDisabledVote] = useState(false);
   const [togglePosts, setTogglePosts] = useState({
     allPosts: false,
     newPosts: false,
@@ -89,15 +94,23 @@ function Posts(props) {
     setVisible(false);
   };
 
-  const [vote, setVote] = useState({
-    up_votes: 0,
-    down_votes: 0,
-  });
-  const upvotePost = (post_id) => {
-    //console.log("FROM UPVOTE", post_id);
+  //const [, setGlobalVotes] = useState()
+  const upvotePostSubmit = (post_id) => {
+    console.log("from upvote post", post_id);
 
-    dispatch(upvotePost(post_id));
-    // console.log("edit post function", editPost(post_id));
+    global_votes.push(dispatch(upvotePost(post_id)));
+
+    setDisabledVote({
+      upvote: true,
+      downvote: false,
+    });
+  };
+  const downvotePostSubmit = (post_id) => {
+    dispatch(downvotePost(post_id));
+    setDisabledVote({
+      upvote: false,
+      downvote: true,
+    });
   };
 
   useEffect(() => {
@@ -105,6 +118,7 @@ function Posts(props) {
     setTogglePosts({
       myPosts: true,
     });
+    console.log("GLOBLA STATE VOTES", global_votes);
   }, [dispatch]);
 
   return (
@@ -167,8 +181,9 @@ function Posts(props) {
                   }}
                 >
                   <Card.Title>{posts.title}</Card.Title>
+                  <Card.Subtitle>Posted By: {posts.username}</Card.Subtitle>
                   <p>{posts.content}</p>
-                  <p>{posts.votes}</p>
+                  <p>{global_votes.length}</p>
                   {togglePosts.newPosts === true ? (
                     <p>{posts.created}</p>
                   ) : null}
@@ -196,13 +211,22 @@ function Posts(props) {
                   ) : null}
 
                   <button
+                    className={
+                      !disabledVote ? "clickable" : "clickable:disabled"
+                    }
                     onClick={() => {
-                      upvotePost(posts.id);
+                      upvotePostSubmit(posts.id);
                     }}
                   >
                     upvote
                   </button>
-                  <button>downvote</button>
+                  <button
+                    onClick={() => {
+                      downvotePostSubmit(posts.id);
+                    }}
+                  >
+                    downvote
+                  </button>
                 </Card>
               );
             })}
