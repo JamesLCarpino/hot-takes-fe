@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
 import NewPostForm from "../Posts/NewPostForm";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -24,10 +24,9 @@ import {
 let global_votes = [];
 
 function Posts(props) {
-  let history = useHistory();
+  //let history = useHistory();
 
   const [visible, setVisible] = useState(false);
-  const [disabledVote, setDisabledVote] = useState(false);
   const [togglePosts, setTogglePosts] = useState({
     allPosts: false,
     newPosts: false,
@@ -39,6 +38,7 @@ function Posts(props) {
 
   const dispatch = useDispatch();
 
+  //toggles and dispatches what is being displayed
   const showAllPosts = () => {
     dispatch(getAllPosts());
     setPostDisplay("All");
@@ -74,6 +74,7 @@ function Posts(props) {
     });
   };
 
+  //delete controls
   const [show, setShow] = useState(false);
   const deleteItOrNot = () => {
     setShow(true);
@@ -87,30 +88,21 @@ function Posts(props) {
     dispatch(deletePost(post_id));
   };
 
-  const showNewPostModal = () => {
+  //new post controls for modal
+  const makeNewPostModal = () => {
     setVisible(true);
   };
   const hidePostModal = () => {
     setVisible(false);
   };
 
-  //const [, setGlobalVotes] = useState()
+  //upvotes and downvotes submitters
   const upvotePostSubmit = (post_id) => {
     console.log("from upvote post", post_id);
-
-    global_votes.push(dispatch(upvotePost(post_id)));
-
-    setDisabledVote({
-      upvote: true,
-      downvote: false,
-    });
+    dispatch(upvotePost(post_id));
   };
   const downvotePostSubmit = (post_id) => {
     dispatch(downvotePost(post_id));
-    setDisabledVote({
-      upvote: false,
-      downvote: true,
-    });
   };
 
   useEffect(() => {
@@ -144,7 +136,7 @@ function Posts(props) {
           </Dropdown.Item>
         </DropdownButton>
       </div>
-      <Button onClick={showNewPostModal}>Got A Hot Take? Click me.</Button>
+      <Button onClick={makeNewPostModal}>Got A Hot Take? Click me.</Button>
       <Modal
         title="Basic Modal"
         onHide={hidePostModal}
@@ -183,7 +175,7 @@ function Posts(props) {
                   <Card.Title>{posts.title}</Card.Title>
                   <Card.Subtitle>Posted By: {posts.username}</Card.Subtitle>
                   <p>{posts.content}</p>
-                  <p>{global_votes.length}</p>
+                  <p>VOTES:{posts.votes.length}</p>
                   {togglePosts.newPosts === true ? (
                     <p>{posts.created}</p>
                   ) : null}
@@ -211,9 +203,6 @@ function Posts(props) {
                   ) : null}
 
                   <button
-                    className={
-                      !disabledVote ? "clickable" : "clickable:disabled"
-                    }
                     onClick={() => {
                       upvotePostSubmit(posts.id);
                     }}
