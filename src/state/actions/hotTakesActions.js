@@ -90,6 +90,7 @@ export const addPost = (newPost) => (dispatch) => {
   axiosWithAuth()
     .post(`/posts`, newPost)
     .then((res) => {
+      console.log("RES DATA", res.data);
       dispatch({ type: POST_POSTS_SUCCESS, payload: res.data });
     })
     .catch((err) => {

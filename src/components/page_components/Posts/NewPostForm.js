@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { addPost } from "../../../state/actions";
 
 export default function NewPostForm({ postData }) {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register } = useForm();
   let dispatch = useDispatch();
 
   const onSubmit = (e) => {

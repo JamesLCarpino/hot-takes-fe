@@ -27,9 +27,7 @@ const store = createStore(rootReducer, applyMiddleware(...middleware));
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <App />
     </Router>
   </Provider>,
   document.getElementById("root")

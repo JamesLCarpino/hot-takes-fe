@@ -68,7 +68,6 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
       return {
         ...state,
         postData: [...state.postData, action.payload],
-        votes: [],
       };
     case POST_POSTS_FAIL:
       return {

@@ -21,8 +21,6 @@ import {
   downvotePost,
 } from "../../../state/actions";
 
-let global_votes = [];
-
 function Posts(props) {
   //let history = useHistory();
 
@@ -106,12 +104,12 @@ function Posts(props) {
   };
 
   useEffect(() => {
-    dispatch(getPostsByUser());
-    setTogglePosts({
-      myPosts: true,
-    });
-    console.log("GLOBLA STATE VOTES", global_votes);
-  }, [dispatch]);
+    // dispatch(getPostsByUser());
+    // setTogglePosts({
+    //   myPosts: true,
+    // });
+    // console.log("GLOBLA STATE VOTES", global_votes);
+  }, []);
 
   return (
     <div>
@@ -119,7 +117,7 @@ function Posts(props) {
         <DropdownButton
           id="dropdown-item-button"
           size="sm"
-          title={`Displaying ${postDisplay} Posts`}
+          title={`Displaying ${postDisplay || "All"} Posts`}
           variant="secondary"
         >
           <Dropdown.Item as="button" onClick={showAllPosts}>
@@ -231,6 +229,7 @@ const mapStateToProps = (state) => {
   return {
     post: state.hotTakesReducer_POSTS.postData,
     loading: state.hotTakesReducer_POSTS.loading,
+    error: state.hotTakesReducer_POSTS.error,
   };
 };
 
