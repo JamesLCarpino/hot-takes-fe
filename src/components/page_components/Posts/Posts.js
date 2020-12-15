@@ -142,7 +142,7 @@ function Posts(props) {
         aria-labelledby="contained-modal"
         centered
       >
-        <NewPostForm />
+        <NewPostForm hidePostModal={hidePostModal} />
       </Modal>
       <div>
         {togglePosts.myPosts === true ? (

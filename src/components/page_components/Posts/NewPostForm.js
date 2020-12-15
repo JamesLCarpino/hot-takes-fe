@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 import { addPost } from "../../../state/actions";
 
-export default function NewPostForm({ postData }) {
+export default function NewPostForm({ postData, hidePostModal }) {
   const { handleSubmit, register } = useForm();
   let dispatch = useDispatch();
 
   const onSubmit = (e) => {
     console.log(e);
     dispatch(addPost(e));
+    hidePostModal();
   };
 
   return (
