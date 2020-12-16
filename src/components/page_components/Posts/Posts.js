@@ -4,6 +4,7 @@ import NewPostForm from "../Posts/NewPostForm";
 // import { useHistory } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
+import CardDeck from "react-bootstrap/CardDeck";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -39,14 +40,14 @@ function Posts(props) {
   //toggles and dispatches what is being displayed
   const showAllPosts = () => {
     dispatch(getAllPosts());
-    setPostDisplay("All");
+    setPostDisplay("Showing All Posts");
     setTogglePosts({
       allPosts: true,
     });
   };
   const showTopPosts = () => {
     dispatch(getTopPosts());
-    setPostDisplay("Top");
+    setPostDisplay("Showing Top Posts");
     setTogglePosts({
       topPosts: true,
     });
@@ -55,7 +56,7 @@ function Posts(props) {
 
   const showNewestPosts = () => {
     dispatch(getNewPosts());
-    setPostDisplay("New");
+    setPostDisplay("Showing New Posts");
     setTogglePosts({
       newPosts: true,
     });
@@ -66,7 +67,7 @@ function Posts(props) {
   const showMyPosts = () => {
     console.log("userID", user_id);
     dispatch(getPostsByUser(user_id));
-    setPostDisplay("My");
+    setPostDisplay("Showing My Posts");
     setTogglePosts({
       myPosts: true,
     });
@@ -104,11 +105,11 @@ function Posts(props) {
   };
 
   useEffect(() => {
-    // dispatch(getPostsByUser());
-    // setTogglePosts({
-    //   myPosts: true,
-    // });
-    // console.log("GLOBLA STATE VOTES", global_votes);
+    const getvoteCount = () => {
+      let posts = dispatch(getAllPosts());
+      console.log(posts);
+    };
+    getvoteCount();
   }, []);
 
   return (
@@ -117,7 +118,7 @@ function Posts(props) {
         <DropdownButton
           id="dropdown-item-button"
           size="sm"
-          title={`Displaying ${postDisplay || "All"} Posts`}
+          title={`${postDisplay}` || `Posts`}
           variant="secondary"
         >
           <Dropdown.Item as="button" onClick={showAllPosts}>
@@ -160,66 +161,68 @@ function Posts(props) {
           <div>
             {props.post.map((posts) => {
               return (
-                <Card
-                  style={{
-                    textAlign: "center",
+                <CardDeck>
+                  <Card
+                    style={{
+                      textAlign: "center",
 
-                    marginLeft: "17%",
-                    marginRight: "17%",
-                    marginTop: "2%",
-                    padding: "2%",
-                  }}
-                >
-                  <Card.Title>{posts.title}</Card.Title>
-                  <Card.Subtitle>Posted By: {posts.username}</Card.Subtitle>
-                  <p>{posts.content}</p>
-                  <p>VOTES:{posts.votes.length}</p>
-                  {togglePosts.newPosts === true ? (
-                    <p>{posts.created}</p>
-                  ) : null}
-
-                  {togglePosts.myPosts === true ? (
-                    <>
-                      {!show ? null : (
-                        <Alert show={show} variant="danger">
-                          <Alert.Heading>
-                            Are you sure you want to delete?
-                          </Alert.Heading>
-
-                          <Button
-                            onClick={() => {
-                              onDelete(posts.id);
-                              setShow(false);
-                            }}
-                          >
-                            {" "}
-                            Delete this cold take you loser.{" "}
-                          </Button>
-                        </Alert>
-                      )}
-                    </>
-                  ) : null}
-
-                  <button
-                    onClick={() => {
-                      upvotePostSubmit(posts.id);
+                      marginLeft: "17%",
+                      marginRight: "17%",
+                      marginTop: "2%",
+                      padding: "2%",
                     }}
                   >
-                    upvote
-                  </button>
-                  <button
-                    onClick={() => {
-                      downvotePostSubmit(posts.id);
-                    }}
-                  >
-                    downvote
-                  </button>
-                </Card>
+                    <Card.Title>{posts.title}</Card.Title>
+                    <Card.Subtitle>Posted By: {posts.username}</Card.Subtitle>
+                    <p>{posts.content}</p>
+                    <p>VOTES:{posts.votes.length}</p>
+                    {togglePosts.newPosts === true ? (
+                      <p>{posts.created}</p>
+                    ) : null}
+
+                    {togglePosts.myPosts === true ? (
+                      <>
+                        {!show ? null : (
+                          <Alert show={show} variant="danger">
+                            <Alert.Heading>
+                              Are you sure you want to delete?
+                            </Alert.Heading>
+
+                            <Button
+                              onClick={() => {
+                                onDelete(posts.id);
+                                setShow(false);
+                              }}
+                            >
+                              {" "}
+                              Delete this cold take you loser.{" "}
+                            </Button>
+                          </Alert>
+                        )}
+                      </>
+                    ) : null}
+
+                    <button
+                      onClick={() => {
+                        upvotePostSubmit(posts.id);
+                      }}
+                    >
+                      upvote
+                    </button>
+                    <button
+                      onClick={() => {
+                        downvotePostSubmit(posts.id);
+                      }}
+                    >
+                      downvote
+                    </button>
+                  </Card>
+                </CardDeck>
               );
             })}
           </div>
         ) : (
-          <Spinner animation="border"></Spinner>
+          <h3>Whats up, got a hot take? Lookin' for the posts?</h3>
         )}
       </div>
     </div>
