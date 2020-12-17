@@ -3,6 +3,9 @@ import {
   GET_POSTS_START,
   GET_POSTS_SUCCESS,
   GET_POSTS_FAIL,
+  GET_POSTS_BY_ID_START,
+  GET_POSTS_BY_ID_SUCCESS,
+  GET_POSTS_BY_ID_FAIL,
   POST_POSTS_START,
   POST_POSTS_SUCCESS,
   POST_POSTS_FAIL,
@@ -92,6 +95,7 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
     case GET_TOP_POST_SUCCESS:
       return {
         ...state,
+        loading: false,
         postData: action.payload,
       };
     case GET_TOP_POST_FAIL:
@@ -172,6 +176,23 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
       };
     case DOWNVOTE_FAIL:
       return { ...state, error: action.payload };
+
+    case GET_POSTS_BY_ID_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case GET_POSTS_BY_ID_SUCCESS:
+      return {
+        ...state,
+        postData: action.payload,
+        loading: false,
+      };
+    case GET_POSTS_BY_ID_FAIL:
+      return {
+        ...state,
+        error: action.payload,
+      };
 
     //comments
     // case GET_COMMENTS_START:

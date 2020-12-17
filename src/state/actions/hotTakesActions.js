@@ -25,6 +25,9 @@ export const GET_NEWEST_POST_FAIL = "GET_NEWEST_POST_FAIL";
 export const GET_USER_POSTS_START = "GET_USER_POSTS_START";
 export const GET_USER_POSTS_SUCCESS = "GET_USER_POSTS_SUCCESS";
 export const GET_USER_POSTS_FAIL = "GET_USER_POSTS_FAIL";
+export const GET_POSTS_BY_ID_START = "GET_POSTS_BY_ID_START";
+export const GET_POSTS_BY_ID_SUCCESS = "GET_POSTS_BY_ID_SUCCESS";
+export const GET_POSTS_BY_ID_FAIL = "GET_POSTS_BY_ID_FAIL";
 export const UPVOTE_SUCCESS = "UPVOTE_SUCCESS";
 export const UPVOTE_FAIL = "UPVOTE_FAIL";
 export const DOWNVOTE_FAIL = "DOWNVOTE_FAIL";
@@ -139,6 +142,18 @@ export const getPostsByUser = (user_id) => (dispatch) => {
     })
     .catch((err) => {
       dispatch({ type: GET_USER_POSTS_FAIL, payload: err.message });
+    });
+};
+
+export const getPostById = (post_id) => (dispatch) => {
+  dispatch({ type: GET_POSTS_BY_ID_START });
+  axiosWithAuth()
+    .get(`posts/${post_id}`)
+    .then((res) => {
+      dispatch({ type: GET_POSTS_BY_ID_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: GET_POSTS_BY_ID_FAIL, payload: err.message });
     });
 };
 
