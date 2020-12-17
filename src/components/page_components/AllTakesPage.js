@@ -12,10 +12,6 @@ export default function AllTakesPage() {
     (state) => state.hotTakesReducer_POSTS
   );
 
-  const goToPost = (post_id) => {
-    console.log("test", post_id);
-  };
-
   useEffect(() => {
     dispatch(getTopPosts());
   }, [dispatch]);
@@ -38,20 +34,12 @@ export default function AllTakesPage() {
           <>
             {postData.map((posts) => {
               return (
-                <Link to={`/post/${posts.id}`}>
-                  <div>
-                    <h1
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        goToPost(posts.id);
-                      }}
-                    >
-                      {posts.title}
-                    </h1>
-                    <p>{posts.content}</p>
-                    <p>{posts.votes}</p>
-                  </div>
-                </Link>
+                <div>
+                  <h1 style={{ cursor: "pointer" }}>{posts.title}</h1>
+                  <p>{posts.content}</p>
+                  <p>{posts.votes}</p>
+                  <Link to={`/post/${posts.id}`}>view post</Link>
+                </div>
               );
             })}
           </>

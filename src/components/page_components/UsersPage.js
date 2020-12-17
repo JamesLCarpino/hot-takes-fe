@@ -24,6 +24,7 @@ export default function UsersPage() {
     localStorage.removeItem("id");
     history.push("/");
   };
+
   let user_id = JSON.parse(localStorage.getItem("id"));
   useEffect(() => {
     dispatch(getUsername(user_id));

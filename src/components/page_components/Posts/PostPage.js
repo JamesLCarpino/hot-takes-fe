@@ -1,16 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getTopPosts, getPostById } from "../../../state/actions";
 import Comments from "../Comments/Comments";
 export default function PostPage() {
   let dispatch = useDispatch();
   const match = useParams();
+  const history = useHistory();
   const { postData, loading } = useSelector(
     (state) => state.hotTakesReducer_POSTS
   );
-  const test = () => {
-    console.log(match.postId);
+  const goBack = () => {
+    history.push("/hot-takes");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -25,6 +27,7 @@ export default function PostPage() {
       <div>
         <Comments />
       </div>
+      <button onClick={goBack}>Go Back</button>
     </div>
   );
 }

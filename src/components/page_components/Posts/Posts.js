@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
 import NewPostForm from "../Posts/NewPostForm";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
@@ -23,7 +23,7 @@ import {
 } from "../../../state/actions";
 
 function Posts(props) {
-  //let history = useHistory();
+  let history = useHistory();
 
   const [visible, setVisible] = useState(false);
   const [togglePosts, setTogglePosts] = useState({
@@ -103,7 +103,9 @@ function Posts(props) {
   const downvotePostSubmit = (post_id) => {
     dispatch(downvotePost(post_id));
   };
-
+  const goBack = () => {
+    history.push("/hot-takes");
+  };
   useEffect(() => {
     const getvoteCount = () => {
       let posts = dispatch(getAllPosts());
@@ -135,6 +137,7 @@ function Posts(props) {
           </Dropdown.Item>
         </DropdownButton>
       </div>
+      <button onClick={goBack}>Back</button>
       <Button onClick={makeNewPostModal}>Got A Hot Take? Click me.</Button>
       <Modal
         title="Basic Modal"
