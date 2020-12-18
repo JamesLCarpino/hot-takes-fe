@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { getTopPosts, getPostById } from "../../state/actions";
-import { Route, Link } from "react-router-dom";
-import PostPage from "./Posts/PostPage";
+import { getTopPosts } from "../../state/actions";
+import { Link } from "react-router-dom";
 
 export default function AllTakesPage() {
   let dispatch = useDispatch();
@@ -34,7 +33,7 @@ export default function AllTakesPage() {
           <>
             {postData.map((posts) => {
               return (
-                <div>
+                <div key={posts.id}>
                   <h1 style={{ cursor: "pointer" }}>{posts.title}</h1>
                   <p>{posts.content}</p>
                   <p>{posts.votes}</p>

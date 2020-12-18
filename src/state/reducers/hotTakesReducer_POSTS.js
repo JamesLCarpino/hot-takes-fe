@@ -36,11 +36,6 @@ import {
 
 const initialState = {
   postData: [],
-
-  commentData: [],
-  singlePostData: [],
-  singleCommentData: [],
-  votes: [],
   loading: false,
   error: "",
 };
@@ -194,22 +189,6 @@ export const hotTakesReducer_POSTS = (state = initialState, action) => {
         error: action.payload,
       };
 
-    //comments
-    // case GET_COMMENTS_START:
-    //   return {
-    //     ...state,
-    //     loading: true,
-    //   };
-    // case GET_COMMENTS_SUCCESS:
-    //   return {
-    //     ...state,
-    //     commentData: action.payload,
-    //   };
-    // case GET_COMMENTS_FAIL:
-    //   return {
-    //     ...state,
-    //     error: action.payload,
-    //   };
     default:
       return state;
   }

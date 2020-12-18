@@ -22,10 +22,13 @@ export default function PostPage() {
   return (
     <div>
       <div>
-        <h2>{postData.title}</h2>
+        <h2>Title:{postData.title}</h2>
       </div>
       <div>
-        <Comments />
+        <h2>Comments</h2>
+        <div>
+          <Comments />
+        </div>
       </div>
       <button onClick={goBack}>Go Back</button>
     </div>
