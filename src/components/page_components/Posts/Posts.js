@@ -107,12 +107,12 @@ function Posts(props) {
     history.push("/hot-takes");
   };
   useEffect(() => {
-    const getvoteCount = () => {
-      let posts = dispatch(getAllPosts());
-      console.log(posts);
-    };
-    getvoteCount();
-  }, []);
+    dispatch(getPostsByUser(user_id));
+    setPostDisplay("Showing My Posts");
+    setTogglePosts({
+      myPosts: true,
+    });
+  }, [dispatch, user_id]);
 
   return (
     <div>
@@ -165,6 +165,7 @@ function Posts(props) {
             {props.post.map((posts) => {
               return (
                 <CardDeck>
+                  {console.log(posts)}
                   <Card
                     style={{
                       textAlign: "center",
