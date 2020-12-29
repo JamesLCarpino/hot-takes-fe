@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Register from "../components/auth_components/Register";
@@ -10,6 +11,8 @@ export default function Landing() {
     register: false,
     login: false,
   });
+  const history = useHistory();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const showRegistration = () => {
     setVisible({
@@ -29,11 +32,37 @@ export default function Landing() {
     setVisible(false);
   };
 
+  const goHome = () => {
+    history.push("/my-home");
+  };
+  const goToAll = () => {
+    history.push("/hot-takes");
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem("token") === null) {
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  }, []);
+
   return (
     <div className="landing-page-wrapper">
       <h1>Welcome to Hot Takes!</h1>
-      <Button onClick={showRegistration}>Register</Button>
-      <Button onClick={showLogin}>Log in</Button>
+
+      {loggedIn === false ? (
+        <>
+          <Button onClick={showRegistration}>Register</Button>
+          <Button onClick={showLogin}>Log in</Button>
+        </>
+      ) : (
+        <>
+          <Button onClick={goToAll}>All Takes</Button>
+          <Button onClick={goHome}>My Page</Button>
+        </>
+      )}
+
       <Modal
         title="Basic Modal"
         onHide={handleCancel}

@@ -178,7 +178,7 @@ function Posts(props) {
                   >
                     <Card.Title>{posts.title}</Card.Title>
                     <Card.Subtitle>Posted By: {posts.username}</Card.Subtitle>
-                    <p>{posts.content}</p>
+                    {/* <p>{posts.content}</p> */}
                     <p>VOTES:{posts.votes.length}</p>
                     {togglePosts.newPosts === true ? (
                       <p>{posts.created}</p>
